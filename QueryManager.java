@@ -3,8 +3,8 @@ import oracle.jdbc.*;
 import oracle.jdbc.pool.OracleDataSource;
 
 public class QueryManager
-{   private static final String USERNAME = "tyfeece467";
-    private static final String PASSWORD = "c10053";
+{   private static final String USERNAME = "YOUR-USERNAME";
+    private static final String PASSWORD = "YOUR-PASSWORD";
     private static final String HOST = "localhost"; // Host
     private static final String PORT = "1521"; // Default port
     private static final String SID = System.getenv("ORACLE_SID"); // Oracle SID
