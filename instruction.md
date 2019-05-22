@@ -1,4 +1,4 @@
-In this course, you will design, develop and implement a relational database for the case study assigned to you (go to the course web site to download). The required database should be developed according to the following stages:
+In this course, you will design, develop and implement a relational database for the [case study](refill.pdf) assigned to you. The required database should be developed according to the following stages:
 1. Develop a conceptual data model reflecting the following requirements:   
 • Identification of the relations(entity types).  
 • Identification of relationship types and their participation and cardinality constraints.  
