@@ -2,10 +2,21 @@
 by [Ty Feng](http://tyfeng.com/) 
 #### <i> A database system for pharmacies to keep track of their customer's prescription and refill information. Implemented using embedded SQL in Java, and Oracle database. </i>
 ### Table of Contents
+[Introduction](#Introduction)  
 [Conceptual Design](#Conceptual-Design)  
 	[Identification of Entities and Attributes](#Identification-of-Entities-and-Attributes)   
-	[Identification of Cardinality and Participation Constraints](#Identification-of-Cardinality-and-Participation-Constraints)
-
+	[Identification of Cardinality and Participation Constraints](#Identification-of-Cardinality-and-Participation-Constraints)  
+[Logical Design](#Logical-Design)  
+[Refined Cardinality and Participation Constraints](#Refined-Cardinality-and-Participation-Constraints)   
+[Entity Relationship (ER) Diagram](#Entity-Relationship-(ER)-Diagram)  
+[Derivation of Relations](#Derivation-of-Relations)   
+[Normalization and Verification](#Normalization-and-Verification)  
+[Integrity Constraints](#Integrity-Constraints)  
+[Implementation](#Implementation)  
+[SQL and Embedded SQL Java Program](#SQL-and-Embedded-SQL-Java-Program)
+[Sample Queries](#Sample-Queries)
+[Conclusion](#Conclusion)
+### Introduction
 Given the [case study of a drug prescription refill system](refill.pdf), [instructions](instruction.md) and the business needs of a pharmacy, I was tasked to create a relational database system that is able to solve those business needs. 
 ### <a name="#Conceptual-Design"></a>Conceptual Design 
 #### Identification of Entities and Attributes
