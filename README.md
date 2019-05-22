@@ -12,10 +12,10 @@ by [Ty Feng](http://tyfeng.com/)
 [Derivation of Relations](#Derivation-of-Relations)   
 [Normalization and Verification](#Normalization-and-Verification)  
 [Integrity Constraints](#Integrity-Constraints)  
-[Implementation](#Implementation)  
-[SQL and Embedded SQL Java Program](#SQL-and-Embedded-SQL-Java-Program)
-[Sample Queries](#Sample-Queries)
-[Conclusion](#Conclusion)
+[Implementation](#Implementation)   
+[SQL and Embedded SQL Java Program](#SQL-and-Embedded-SQL-Java-Program)  
+[Sample Queries](#Sample-Queries)  
+[Conclusion](#Conclusion)  
 ### Introduction
 Given the [case study of a drug prescription refill system](refill.pdf), [instructions](instruction.md) and the business needs of a pharmacy, I was tasked to create a relational database system that is able to solve those business needs. 
 ### <a name="#Conceptual-Design"></a>Conceptual Design 
