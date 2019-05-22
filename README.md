@@ -31,7 +31,7 @@ Staff 1..1  --- file ---  0..* Prescription
 Staff 1..1 --- manage --- 1..* Customer
 Prescription 1..1 --- has ---  1..* Refill
 ```
-Since Distributor sell Compound is a many to many *:* relationship, I created a new relation, ```Seller ( distributorNo (ref Distributor), brandName (ref Compound) )```. The new relationships involving Distributor and Compound become the following:
+Since Distributor sell Compound is a many to many \*:\* relationship, I created a new relation, ```Seller ( distributorNo (ref Distributor), brandName (ref Compound) )```. The new relationships involving Distributor and Compound become the following:
 ```
 Distributor 1..1 --- from --- 0..* Seller
 Seller 0..* --- of --- 1..1 Compound
