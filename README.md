@@ -22,6 +22,7 @@ Staff 1..*  --- file ---  0..* Prescription
 Staff 1..* --- manage --- 1..* Customer
 ```
 ### Logical Design 
+#### Cardinality and Participation Constraints
 After some refinement and thinking based on the business needs of the pharmacy, I decided to add a ```refill``` entity for pharmacies to keep track of each customer's refill information. Based on normalization rules on cardinality and participation constraints, I updated those constraints: 
 ```
 Customer 1..1    --- have ---   1..* Prescription
@@ -43,9 +44,10 @@ Seller (distributorNo (ref Distributor), brandName (ref Compound))
 (Primary Key: distributorNo, brandName)
 ```
 All the other relationships in my design are one to many 1:* relationships. I have copied the primary keys of the parent entity to the child entity as foreign keys. 
-
+#### Entity Relationship Diagram
 Based on the above information, I created an ER diagram: \
 ![](RefinedER.jpg) 
+#### Derivation of Relations
 Then I derived those relations and modeled its logical design with data types and constraints, including primary key, foreign key, and general constraints.  
 ```
 Prescription: prescriptionNo (primary key), dateFiled, quantity, instructions, brandName (ref Compound), diagnosticID, routeOfAdministration, genericOrWritten, licenseNo (ref Staff), taxNo (ref Customer) 
@@ -58,6 +60,7 @@ Seller: distributorNo (ref Distributor), brandName (ref Compound)
 (Primary Key: distributorNo, brandName)
 Refill: refillNo (primary key), prescriptionNo (ref Prescription), date, price
 ```
+#### Normalization and Verification
 Those relations are normalized from 2NF to BCNF.   
 ```
 Prescription: prescriptionNo (primary key), dateFiled, quantity, instructions, routeOfAdministration, genericOrWritten, brandName (ref Compound), diagnosticID, licenseNo (ref Staff), taxNo (ref Customer) 
@@ -94,11 +97,12 @@ Seller is already normalized to BCNF.
 Refill: refillNo (primary key), prescriptionNo (ref Prescription), date, price  
 ```
 Refill is already normalized to BCNF. All non-primary attributes are fully functionally dependent on the primary key, and no other dependencies are present. 
-
+#### Integrity Constraints
 Then I defined the integrity constraints as well as data types for each attribute in each entity.  
 Since Oracle does not have boolean data type, I am using the CHAR data type with a length of 1 and the only inputs allowed are ‘Y’ or ‘N’. For the attribute genericOrWritten in Prescription table, ‘Y’ means generic, and ‘N’ means written. For the attribute genericSubstitute in Compound table, ‘Y’ means the compound is a generic substitute, and ‘N’ means otherwise.  
 
 ### Implementation
+#### SQL and Embedded SQL Java Program
 Then I created those tables from my logical design in SQL in my Oracle database. The script used to create tables are in the ```createtable.sql``` file. I inputted some sample data according to constraints established earlier, and the script for inserting data to the database is in the ```insert.sql``` file. After that, I implemented an embedded SQL program in Java with a command-line user interface that allows users to query, update, delete, and insert into the database. The .java files that make up the embedded SQL Java program are: 
 ```
 Main.java
@@ -107,6 +111,7 @@ QueryManager.java
 UI.java
 ```
 To run, simply type ```make run``` as the ```Makefile``` script would handle the compilation process. \
+#### Sample Queries
 My database system is able to handle the following sample queries. 
 1. List all the active prescriptions of a customer \
 ![](/Drug-Prescription-DB-outputImages/db1.jpeg) 
