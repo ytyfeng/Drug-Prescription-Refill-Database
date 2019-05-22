@@ -3,6 +3,7 @@ by [Ty Feng](http://tyfeng.com/)
 #### <i> A database system for pharmacies to keep track of their customer's prescription and refill information. Implemented using embedded SQL in Java, and Oracle database. </i>
 Given the [case study of a drug prescription refill system](refill.pdf), [instructions](instruction.md) and the business needs of a pharmacy, I was tasked to create a relational database system that is able to solve those business needs. 
 ### Conceptual design 
+#### Identification of Entities and Attributes
 I firstly created a conceptual model with the following entities and their attributes:  
 ```
 Prescription: prescriptionNo (primary key), dateFiled, compound, quantity, instructions, numOfRefills (optional), diagnosticID (optional), routeOfAdministration (optional), genericBool (optional)
@@ -13,6 +14,7 @@ Compound: form, size, strength, primaryIngredient, secondaryIngredient, brandNam
 Manufacturer: manufacturerNo (primary key), name, address, compound
 Distributor: distributorNo (primary key), name, address, compound
 ```
+#### Identification of Cardinality and Participation Constraints
 Then I identified the cardinality and participation constraints:  
 ```
 Customer 1..1    --- have ---   1..* Prescription
@@ -22,7 +24,7 @@ Staff 1..*  --- file ---  0..* Prescription
 Staff 1..* --- manage --- 1..* Customer
 ```
 ### Logical Design 
-#### Cardinality and Participation Constraints
+#### Refined Cardinality and Participation Constraints
 After some refinement and thinking based on the business needs of the pharmacy, I decided to add a ```refill``` entity for pharmacies to keep track of each customer's refill information. Based on normalization rules on cardinality and participation constraints, I updated those constraints: 
 ```
 Customer 1..1    --- have ---   1..* Prescription
@@ -44,7 +46,7 @@ Seller (distributorNo (ref Distributor), brandName (ref Compound))
 (Primary Key: distributorNo, brandName)
 ```
 All the other relationships in my design are one to many 1:* relationships. I have copied the primary keys of the parent entity to the child entity as foreign keys. 
-#### Entity Relationship Diagram
+#### Entity Relationship (ER) Diagram
 Based on the above information, I created an ER diagram: \
 ![](RefinedER.jpg) 
 #### Derivation of Relations
