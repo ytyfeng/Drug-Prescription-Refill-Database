@@ -1,8 +1,104 @@
 # Drug Prescription Refill Database
-### A database system for pharmacies to keep track of their customer's prescription and refill information. Implemented using embedded SQL in Java, and Oracle database.
-Given the [case study of a drug prescription refill system](refill.pdf), [instructions](instruction.md) and the business needs of a pharmacy, I was tasked to create a relational database system that is able to solve those business needs. I firstly created a conceptual model and its ER diagram: \
+#### <i> A database system for pharmacies to keep track of their customer's prescription and refill information. Implemented using embedded SQL in Java, and Oracle database. </i>
+Given the [case study of a drug prescription refill system](refill.pdf), [instructions](instruction.md) and the business needs of a pharmacy, I was tasked to create a relational database system that is able to solve those business needs. 
+### Conceptual design 
+I firstly created a conceptual model with the following entities and their attributes:  
+```
+Prescription: prescriptionNo (primary key), dateFiled, compound, quantity, instructions, numOfRefills (optional), diagnosticID (optional), routeOfAdministration (optional), genericBool (optional)
+Customer: taxNo (primary key), name, address, DOB, telephone, prescriptionNo
+Staff: licenseNo (primary key), name, address
+Compound: form, size, strength, primaryIngredient, secondaryIngredient, brandName, manufacturerNo, distributorNo, diagnosticID,  instructions, routeOfAdministration
+		Composite primary key: (form, size, strength, primaryIngredient, manufacturerNo)
+Manufacturer: manufacturerNo (primary key), name, address, compound
+Distributor: distributorNo (primary key), name, address, compound
+```
+Then I identified the cardinality and participation constraints:  
+```
+Customer 1..1    --- have ---   1..* Prescription
+Compound 1..1   --- in ---   1..*  Prescription
+Compound 0..*    --- by ---   1..1 Manufacturer
+Staff 1..*  --- file ---  0..* Prescription 
+Staff 1..* --- manage --- 1..* Customer
+```
+### Logical Design 
+After some refinement and thinking based on the business needs of the pharmacy, I decided to add a ```refill``` entity for pharmacies to keep track of each customer's refill information. Based on normalization rules on cardinality and participation constraints, I updated those constraints: 
+```
+Customer 1..1    --- have ---   1..* Prescription
+Compound 1..1   --- in ---   0..*  Prescription
+Compound 0..*    --- by ---   1..1 Manufacturer
+Distributor 0..*  --- sell ---  0..* Compound	
+Staff 1..1  --- file ---  0..* Prescription 
+Staff 1..1 --- manage --- 1..* Customer
+Prescription 1..1 --- has ---  1..* Refill
+```
+Since Distributor sell Compound is a many to many *:* relationship, I created a new relation, ```Seller ( distributorNo (ref Distributor), brandName (ref Compound) )```. The new relationships involving Distributor and Compound become the following:
+```
+Distributor 1..1 --- from --- 0..* Seller
+Seller 0..* --- of --- 1..1 Compound
+```
+The primary key of Distributor and the primary key of Compound are copied into Seller as foreign keys, forming a composite primary key for Seller. 
+```
+Seller (distributorNo (ref Distributor), brandName (ref Compound))
+(Primary Key: distributorNo, brandName)
+```
+All the other relationships in my design are one to many 1:* relationships. I have copied the primary keys of the parent entity to the child entity as foreign keys. 
+
+Based on the above information, I created an ER diagram: \
 ![](RefinedER.jpg) 
-Then I derived those relations and modeled its logical design with data types and constraints, including primary key, foreign key, and general constraints. Those relations are normalized from 2NF to BCNF. Then I created those tables in SQL in my Oracle database. The script used to create tables are in the ```createtable.sql``` file. I inputted some sample data according to constraints established earlier, and the script for inserting data to the database is in the ```insert.sql``` file. After that, I implemented an embedded SQL program in Java with a command-line user interface that allows users to query, update, delete, and insert into the database. The .java files that make up the embedded SQL Java program are: 
+Then I derived those relations and modeled its logical design with data types and constraints, including primary key, foreign key, and general constraints.  
+```
+Prescription: prescriptionNo (primary key), dateFiled, quantity, instructions, brandName (ref Compound), diagnosticID, routeOfAdministration, genericOrWritten, licenseNo (ref Staff), taxNo (ref Customer) 
+Customer: taxNo (primary key), name, address, DOB, telephone, prescriptionNo (ref Prescription), licenseNo (ref Staff)  
+Staff: licenseNo (primary key), name, address
+Compound: brandName (primary key), diagnosticID, form, size, strength, primaryIngredient, secondaryIngredient, manufacturerNo (ref Manufacturer), instructions, routeOfAdministration, genericSubstitute
+	Manufacturer: manufacturerNo (primary key), name, address, brandName (ref Compound)
+Distributor: distributorNo (primary key), name, address
+Seller: distributorNo (ref Distributor), brandName (ref Compound) 
+(Primary Key: distributorNo, brandName)
+Refill: refillNo (primary key), prescriptionNo (ref Prescription), date, price
+```
+Those relations are normalized from 2NF to BCNF.   
+```
+Prescription: prescriptionNo (primary key), dateFiled, quantity, instructions, routeOfAdministration, genericOrWritten, brandName (ref Compound), diagnosticID, licenseNo (ref Staff), taxNo (ref Customer) 
+```
+All the non-primary key attributes are functionally dependent on the primary key prescriptionNo. It is already normalized to BCNF.
+```
+Customer: taxNo (primary key), name, address, DOB, telephone, prescriptionNo (ref Prescription), licenseNo (ref Staff)  
+```
+Customer is already normalized to BCNF. All non-primary attributes are fully functionally dependent on the primary key, and no other dependencies are present. 
+```
+Staff: licenseNo (primary key), name, address
+```
+Staff is already normalized to BCNF. Attributes name and address are fully functionally dependent on the primary key, and no other dependencies are present. 
+```
+Compound: diagnosticID, form, size, strength, primaryIngredient, secondaryIngredient, brandName (primary key), manufacturerNo (ref Manufacturer), instructions, routeOfAdministration, genericSubstitute
+```
+Compound is already normalized to BCNF. All non-primary attributes are fully functionally dependent on the primary key, and no other dependencies are present. 
+```
+Manufacturer: manufacturerNo (primary key), name, address, brandName(ref Compound)
+```
+Manufacturer is already normalized to BCNF. All non-primary attributes are fully functionally dependent on the primary key, and no other dependencies are present. 
+```
+Distributor: distributorNo (primary key), name, address
+```
+Distributor is already normalized to BCNF. All non-primary attributes are fully functionally dependent on the primary key, and no other dependencies are present. 
+
+```
+Seller: distributorNo (ref Distributor), brandName (ref Compound) 
+(Primary Key: distributorNo, brandName)
+```
+Seller is already normalized to BCNF. 
+ 
+```
+Refill: refillNo (primary key), prescriptionNo (ref Prescription), date, price  
+```
+Refill is already normalized to BCNF. All non-primary attributes are fully functionally dependent on the primary key, and no other dependencies are present. 
+
+Then I defined the integrity constraints as well as data types for each attribute in each entity.  
+Since Oracle does not have boolean data type, I am using the CHAR data type with a length of 1 and the only inputs allowed are ‘Y’ or ‘N’. For the attribute genericOrWritten in Prescription table, ‘Y’ means generic, and ‘N’ means written. For the attribute genericSubstitute in Compound table, ‘Y’ means the compound is a generic substitute, and ‘N’ means otherwise.  
+
+### Implementation
+Then I created those tables from my logical design in SQL in my Oracle database. The script used to create tables are in the ```createtable.sql``` file. I inputted some sample data according to constraints established earlier, and the script for inserting data to the database is in the ```insert.sql``` file. After that, I implemented an embedded SQL program in Java with a command-line user interface that allows users to query, update, delete, and insert into the database. The .java files that make up the embedded SQL Java program are: 
 ```
 Main.java
 Menu.java
