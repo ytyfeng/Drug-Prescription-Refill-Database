@@ -9,7 +9,7 @@ In this course, you will design, develop and implement a relational database for
 2. Develop a global logical data model based on the following requirements:  
 • Refinement of the conceptual model-including a refined Enhanced Entity-Relationship (EER) diagram.  
 • Derivation of relations from the refined conceptual model.  
-• Validation of logicalmodel using normalization to BCNF.  
+• Validation of logical model using normalization to BCNF.  
 • Validation of logical model against corresponding user transactions.  
 • Definition of integrity constraints including:  
 – Primary key constraints.  
