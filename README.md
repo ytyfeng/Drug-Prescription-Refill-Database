@@ -119,11 +119,20 @@ My database system is able to handle the following sample queries.
 ![](/Drug-Prescription-DB-outputImages/db5.jpeg) 
 6. List all the prescriptions that have compounds not appropriate for the conditions being treated 
 ![](/Drug-Prescription-DB-outputImages/db6.jpeg) 
-7. List all generic substitutions for a compound
+7. List all generic substitutions for a compound  
+In my logical design, I set genericSubstitute as an boolean attribute of a compound. To find generic substitutes, I assumed that the brand names for the compounds are different, since they could be manufactured by different companies, but the primary ingredient should be the same, and is what matters to treat a condition. Therefore, I am using primaryIngredient as the attribute to find generic substitutes for a non-generic compound.  
 ![](/Drug-Prescription-DB-outputImages/db7.jpeg) 
 8. Update the address information of a physician
 ![](/Drug-Prescription-DB-outputImages/dbupdate.jpeg) 
-9. Delete all prescriptions that are more than five years old
+9. Delete all prescriptions that are more than five years old  
+Since the DATE data type uses the number of dates, I computed five years as days by multiplying 5 to 365 days, which is 1825 days.
+ 
 ![](/Drug-Prescription-DB-outputImages/dbdelete.jpeg) 
 10. Insert a new prescription for a new customer
 ![](/Drug-Prescription-DB-outputImages/dbinsert.jpeg) 
+
+### Conclusion
+In this project I was tasked to create a database system for a pharmacy that has needs to keep track of refills of prescriptions of their customers, as well as the corresponding compound information for each prescription. In the conceptual design I identified the entities and their attributes and developed a rudimentary ER diagram to show the relationships. In the logical design I updated the ER diagram after thinking about the scenarios when customers need to keep track of each refill information, and for that I have added the refill table. After deriving the relationships based on the ER diagram, I normalized each relation to BCNF. I then checked my logical model against the sample queries provided to ensure that my model can accommodate all of those tasks. Lastly, I defined the data types and constraints of each relation, including primary keys, foreign keys, and alternate keys.  
+In the implementation stage, I chose java as the language to implement an embedded sql program. In the command-line user interface I tried to provide as much information as possible for the user when they are engaging in potentially dangerous tasks such as deleting entries. I showed them all the information that will be deleted before executing such query.   
+The general assumptions I have made were that brand names for different compounds are different, and therefore can be used as a primary key to uniquely identify compounds. However, to find generic substitutes for a compound I assumed that what matters is the primary ingredient in the compound. Thus, I used the primary ingredient of the given compound to find other compounds that share the same primary ingredient and that are classified as generic substitutions. I also assumed that users would input data correctly when inserting or updating entries. However, bad inputs would not crash the program because the database would reject such entry because of the constraints made. 
+
