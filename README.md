@@ -2,9 +2,9 @@
 by [Ty Feng](http://tyfeng.com/) 
 #### <i> A database system for pharmacies to keep track of their customer's prescription and refill information. Implemented using embedded SQL in Java, and Oracle database. </i>
 ### Table of Contents
-[Conceptual Design](#Conceptual-Design)
-[Identification of Entities and Attributes](#Identification-of-Entities-and-Attributes)   
-[Identification of Cardinality and Participation Constraints](#Identification-of-Cardinality-and-Participation-Constraints)
+[Conceptual Design](#Conceptual-Design)  
+	[Identification of Entities and Attributes](#Identification-of-Entities-and-Attributes)   
+	[Identification of Cardinality and Participation Constraints](#Identification-of-Cardinality-and-Participation-Constraints)
 
 Given the [case study of a drug prescription refill system](refill.pdf), [instructions](instruction.md) and the business needs of a pharmacy, I was tasked to create a relational database system that is able to solve those business needs. 
 ### <a name="#Conceptual-Design"></a>Conceptual Design 
