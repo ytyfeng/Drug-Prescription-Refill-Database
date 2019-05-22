@@ -1,13 +1,13 @@
 In this course, you will design, develop and implement a relational database for the [case study](refill.pdf) assigned to you. The required database should be developed according to the following stages:
 1. Develop a conceptual data model reflecting the following requirements:   
-• Identification of the relations(entity types).  
+• Identification of the relations (entity types).  
 • Identification of relationship types and their participation and cardinality constraints.  
 • Identification of attributes and association of attributes with entity or relationship types.  
 • Determination of candidate and primary key attributes of entity types.  
 • Determination of specialization/generalization and categorization relationships, whenever it is appropriate.  
-• EnhancedEntity-Relationship(EER) diagram to reflect the requirements.  
+• Enhanced Entity-Relationship (EER) diagram to reflect the requirements.  
 2. Develop a global logical data model based on the following requirements:  
-• Refinement of the conceptual model-including a refined Enhanced Entity-Relationship(EER) diagram.  
+• Refinement of the conceptual model-including a refined Enhanced Entity-Relationship (EER) diagram.  
 • Derivation of relations from the refined conceptual model.  
 • Validation of logicalmodel using normalization to BCNF.  
 • Validation of logical model against corresponding user transactions.  
