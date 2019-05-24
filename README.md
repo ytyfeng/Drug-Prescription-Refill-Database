@@ -118,6 +118,11 @@ Refill is already normalized to BCNF. All non-primary attributes are fully funct
 #### Integrity Constraints
 Then I defined the integrity constraints as well as data types for each attribute in each entity.  
 Since Oracle does not have boolean data type, I am using the CHAR data type with a length of 1 and the only inputs allowed are ‘Y’ or ‘N’. For the attribute genericOrWritten in Prescription table, ‘Y’ means generic, and ‘N’ means written. For the attribute genericSubstitute in Compound table, ‘Y’ means the compound is a generic substitute, and ‘N’ means otherwise.  
+| Entity  | Attributes  | Data type, length  | Null  |
+|---|---|---|---|
+| Prescription  |  prescriptionNo (primary key) | varchar 24 | No |
+|               |  dateFiled                    | Date       | No |
+
 
 ### Implementation
 #### SQL and Embedded SQL Java Program
