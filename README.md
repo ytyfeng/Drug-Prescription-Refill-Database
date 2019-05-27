@@ -179,7 +179,7 @@ Menu.java
 QueryManager.java
 UI.java
 ```
-To run, simply type ```make run``` as the ```Makefile``` script would handle the compilation process. \
+To run, simply type ```make run``` as the ```Makefile``` script would handle the compilation process. 
 #### Sample Queries
 My database system is able to handle the following sample queries. 
 1. List all the active prescriptions of a customer \
