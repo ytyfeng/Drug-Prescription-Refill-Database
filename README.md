@@ -118,10 +118,56 @@ Refill is already normalized to BCNF. All non-primary attributes are fully funct
 #### Integrity Constraints
 Then I defined the integrity constraints as well as data types for each attribute in each entity.  
 Since Oracle does not have boolean data type, I am using the CHAR data type with a length of 1 and the only inputs allowed are ‘Y’ or ‘N’. For the attribute genericOrWritten in Prescription table, ‘Y’ means generic, and ‘N’ means written. For the attribute genericSubstitute in Compound table, ‘Y’ means the compound is a generic substitute, and ‘N’ means otherwise.  
-| Entity  | Attributes  | Data type, length  | Null  |
-|---|---|---|---|
-| Prescription  |  prescriptionNo (primary key) | varchar 24 | No |
-|               |  dateFiled                    | Date       | No |
+
+| Entity | Attributes | Data type, length | Null | 
+| ------ | ---------- | ----------------- | ---- | 
+| Prescription  |  prescriptionNo (primary key) | varchar 24 | No |  
+|               |  dateFiled                    | date       | No |  
+|		|  quantity			| integer  | No |  
+|		|  instructions 		| varchar 240 | No |  
+|		|  routeofAdministration	| varchar 50 | No |  
+| 		| genericOrWritten 		| char 1 ('Y','N') | No |  
+|		| brandName (ref Compound) 	| varchar 20 | No |  
+|		| diagnosticID (alternate key) | varchar 20 | No |  
+| 		| licenseNo (ref Staff) 	| varchar 20 | No |  
+| 		| taxNo (ref Customer)		| varchar 12 | No | 
+| Customer | taxNo (primary key) | varchar 12 | No | 
+| | name | varchar 30 | No | 
+| | address | varchar 50 | No | 
+| | DOB | date | No | 
+| | telephone | varchar 16 | No | 
+| | prescriptionNo (ref Prescription) | varchar 24 | No | 
+| | licenseNo (ref Staff) | varchar 20 | No | 
+| Staff | licenseNo (primary key) | varchar 20 | No | 
+| | name | varchar 30 | No | 
+| | address | varchar 50 | No | 
+| Compound | brandName (primary key) | varchar 20 | No | 
+| | diagnosticID | varchar 20 | No | 
+| | form | varchar 20 | No | 
+| | size | varchar 20 | No | 
+| | strength | varchar 20 | No | 
+| | primaryIngredient | varchar 40 | No | 
+| | secondaryIngredient | varchar 40 | No | 
+| | manufacturerNo (ref Manufacturer) | varchar 10 | No | 
+| | instructions | varchar 240 | No | 
+| | routeofAdministration | varchar 50 | No | 
+| | genericSubstitute | char 1 ('Y','N') | No | 
+| Manufacturer | manufacturerNo (primary key) | varchar 10 | No | 
+| | name | varchar 20 | No | 
+| | address | varchar 50 | No | 
+| | brandName (ref Compound) | varchar 20 | No | 
+| Distributor | distrbutorNo (primary key) | varchar 10 | No | 
+| | name | varchar 20 | No | 
+| | address | varchar 50 | No | 
+| Seller | distributorNo (ref Distributor) | varchar 10 | No | 
+| | brandName (ref Compound) | varchar 20 | No |
+| | primary key: (distributorNo, brandName) | | 
+| Refill | prescriptionNo (ref Prescription, primary key)  | varchar 24 | No | 
+| | refillNum | integer | No | 
+| | date | Date | No | 
+| | price | integer | No | 
+| | CONSTRAINT refillNum CHECK (refillNum >= 1) | | 
+
 
 
 ### Implementation
