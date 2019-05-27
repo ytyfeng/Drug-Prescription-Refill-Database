@@ -164,7 +164,7 @@ Since Oracle does not have boolean data type, I am using the CHAR data type with
 | | primary key: (distributorNo, brandName) | | 
 | Refill | prescriptionNo (ref Prescription, primary key)  | varchar 24 | No | 
 | | refillNum | integer | No | 
-| | date | Date | No | 
+| | date | date | No | 
 | | price | integer | No | 
 | | CONSTRAINT refillNum CHECK (refillNum >= 1) | | 
 
